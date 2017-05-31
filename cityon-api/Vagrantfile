@@ -84,7 +84,10 @@ Vagrant.configure("2") do |config|
     curl -o docker-compose.yml -L "https://velocitylab.github.io/cityon/cityon-api/docker-compose.yml"
     docker-compose up -d
     curl -o city.json -L "https://velocitylab.github.io/cityon/cityon-api/mongodb/city.json"
+    curl -o post.json -L "https://velocitylab.github.io/cityon/cityon-api/mongodb/post.json"
     docker cp city.json $(docker-compose ps -q mongodb):/city.json
+    docker cp post.json $(docker-compose ps -q mongodb):/post.json
     docker exec $(docker-compose ps -q mongodb) mongoimport -d cityon -c city --file /city.json
+    docker exec $(docker-compose ps -q mongodb) mongoimport -d cityon -c post --file /post.json
   SHELL
 end
